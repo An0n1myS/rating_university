@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% include 'templates/header_links.html' %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/teachers.css') }}">
+</head>
+<body>
+    {% include 'templates/header.html' %}
+    <div class="content">
+        {% block content %}
+          <h1>Список вчителів та їх предметів</h1>
+          {% for teacher_name, subjects in teachers.items() %}
+            <section>
+              <h2>{{ teacher_name }}</h2>
+              <ul>
+                {% for subject_name in subjects %}
+                  <li>{{ subject_name }}</li>
+                {% endfor %}
+              </ul>
+            </section>
+          {% endfor %}
+        {% endblock %}
+    </div>
+    {% include 'templates/footer.html' %}
+</body>
+</html>

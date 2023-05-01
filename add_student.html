@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_student.css') }}">
+    {% include 'templates/header_links.html' %}
+</head>
+<body>
+ {% include 'templates/header.html' %}
+    <h2 class="page_title">Додати нового студента</h2>
+  <form method="post" action="/students/add_form">
+    <div class="form-group">
+      <label for="name">Имя студента:</label>
+      <input type="text" id="name" name="name" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="group">Группа:</label>
+      <select id="group" name="group" class="form-control">
+        {% for group in groups %}
+          <option value="{{ group[0] }}">{{ group[1] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="subjects">Оценки:</label>
+      {% for subject in subjects %}
+        <div class="input-group">
+          <label for="subject{{ subject[0] }}">{{ subject[1] }}:</label>
+          <input type="number" id="subject{{ subject[0] }}" name="grades[]" class="form-control" min="50" max="100" required>
+          <input type="hidden" name="subject_ids[]" value="{{ subject[0] }}">
+        </div>
+      {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary">Додати студента</button>
+  </form>
+
+
+  {% include 'templates/footer.html' %}
+</body>
+</html>

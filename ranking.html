@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% include 'templates/header_links.html' %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ranking.css') }}">
+</head>
+<body>
+{% include 'templates/header.html' %}
+<section>
+  <h2>Рейтинг успішності студентів</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Группа</th>
+        <th class="student">Студент</th>
+        {% for subject_name in students_sorted[0]['grades'].keys() %}
+          <th>{{ subject_name }}</th>
+        {% endfor %}
+        <th>Рейтинг</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for student in students_sorted %}
+        <tr>
+          <td class="min_table_column">{{ student['group'] }}</td>
+          <td class="student">{{ student['name'] }}</td>
+          {% for grade in student['grades'].values() %}
+            <td>{{ grade }}</td>
+          {% endfor %}
+          <td class="min_table_column">{{ student['rating'] }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+
+
+
+{% include 'templates/footer.html' %}
+</body>
+</html>

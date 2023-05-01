@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% include 'templates/header_links.html' %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ranking_for_group.css') }}">
+</head>
+<body>
+{% include 'templates/header.html' %}
+{% for group_name, group in groups.items() %}
+  <section>
+    <h2>Група {{ group_name }}</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Студент</th>
+          {% for subject_name in group['students'][0]['grades'].keys() %}
+            <th>{{ subject_name }}</th>
+          {% endfor %}
+          <th>Рейтинг</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in group['students']|sort(attribute='rating', reverse=True) %}
+          <tr>
+            <td>{{ student['name'] }}</td>
+            {% for grade in student['grades'].values() %}
+              <td>{{ grade }}</td>
+            {% endfor %}
+            <td>{{ student['rating'] }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endfor %}
+
+{% include 'templates/footer.html' %}
+</body>
+</html>
